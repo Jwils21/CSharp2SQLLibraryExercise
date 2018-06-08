@@ -28,7 +28,7 @@ namespace SqlLibrary {
 		//	}
 		//	reader.Close();
 		//	return users;
-		}
+		//}
 
 
 	}

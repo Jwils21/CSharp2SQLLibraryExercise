@@ -7,7 +7,8 @@ using SqlLibrary;
 
 namespace CSharp2SqlLibrary {
 	class Program {
-		static void Main(string[] args) {
+
+		static void ActnUsr() {
 
 			//Returns all 
 			UsersController Userctrl = new UsersController(@"STUDENT50\SQLEXPRESS", "prssql");
@@ -45,11 +46,63 @@ namespace CSharp2SqlLibrary {
 			User user = Userctrl.Get(6);
 			user.FirstName = "Kimmie";
 			//bool success = Userctrl.Change(user);
-			
+
 
 			bool success = Userctrl.Remove(user);
 
 			Userctrl.CloseConnection();
+
+		}
+
+		static void ActnVendor() {
+			//Returns all 
+			VendorsController VendorCtrl = new VendorsController(@"STUDENT50\SQLEXPRESS", "prssql");
+			IEnumerable<Vendor> vendor = VendorCtrl.List();
+			foreach(Vendor Vendor1 in vendor) {
+				Console.WriteLine($"{Vendor1.Code} {Vendor1.Name} {Vendor1.Address}");
+			}
+
+			Vendor Amzn = VendorCtrl.Get(1);
+			if(Amzn == null) {
+				Console.WriteLine("Vendor not found");
+			} else {
+				Console.WriteLine($"{Amzn.Code} {Amzn.Name} {Amzn.Address}");
+			}
+
+			Amzn = VendorCtrl.Get(999);
+			if(Amzn == null) {
+				Console.WriteLine("User not found");
+			} else {
+				Console.WriteLine($"{Amzn.Code} {Amzn.Name} {Amzn.Address}");
+			}
+
+			Vendor newVendor = new Vendor() {
+				Code = "Walm",
+				Address = "564 Walmart way",
+				Name = "Walmart",
+				City = "Walmartville",
+				State = "GA",
+				Zip = "98123",
+				Email = "orders@walmart.com",
+				Phone = "987-456-1203",
+				Active = true,
+				IsPreapproved = true
+			};
+			//bool success = VendorCtrl.Create(newVendor);
+
+			Vendor vendorWal = VendorCtrl.Get(5);
+			vendorWal.Code = "WAL";
+			//bool success = VendorCtrl.Change(vendorWal);
+
+
+			bool success = VendorCtrl.Remove(vendorWal);
+
+			VendorCtrl.CloseConnection();
+		}
+
+
+		static void Main(string[] args) {
+			ActnVendor();
 
 
 		}
